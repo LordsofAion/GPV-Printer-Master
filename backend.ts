@@ -306,14 +306,14 @@ app.post('/api/auth/login', async (req: any, res: any) => {
 
 // CAIXA ROUTES
 app.get('/api/caixa/status', authenticateToken, async (req: any, res: any) => {
-    if (req.user.id === 999) {
-        const caixas = await prisma.$queryRawUnsafe('SELECT * FROM Caixa WHERE usuarioId = 999 AND status = ? LIMIT 1', 'ABERTO') as any[];
-        if (caixas.length > 0) return res.json({ aberto: true, caixa: caixas[0] });
-        return res.json({ aberto: true, caixa: { id: 0, status: 'ABERTO', usuarioId: 999, empresaId: 1, saldo_inicial: 0 } });
-    }
     try {
-        const caixas = await prisma.$queryRawUnsafe('SELECT * FROM Caixa WHERE empresaId = ? AND usuarioId = ? AND status = ? LIMIT 1', req.user.empresaId, req.user.id, 'ABERTO') as any[];
-        const caixa = caixas && caixas.length > 0 ? caixas[0] : null;
+        const caixa = await prisma.caixa.findFirst({
+            where: {
+                empresaId: req.user.empresaId,
+                usuarioId: req.user.id,
+                status: 'ABERTO'
+            }
+        });
         res.json({ aberto: !!caixa, caixa });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao verificar caixa' });
@@ -325,20 +325,30 @@ app.post('/api/caixa/abrir', authenticateToken, async (req: any, res: any) => {
     const uid = req.user.id;
     const eid = req.user.empresaId || 1;
 
-    if (uid === 999) {
-        const existing = await prisma.$queryRawUnsafe('SELECT id FROM Caixa WHERE usuarioId = 999 AND status = ? LIMIT 1', 'ABERTO') as any[];
-        if (existing.length > 0) return res.json({ success: true, message: 'Caixa já está aberto', caixa: existing[0] });
-        await prisma.$executeRawUnsafe('INSERT OR IGNORE INTO Caixa (id, saldo_inicial, status, empresaId, usuarioId, dta_abertura) VALUES (999, ?, ?, ?, ?, datetime("now"))', saldoInicial || 0, 'ABERTO', 1, 999).catch(() => { });
-        return res.json({ success: true, caixa: { id: 999, status: 'ABERTO', usuarioId: 999, empresaId: 1, saldo_inicial: saldoInicial || 0 } });
-    }
-
     try {
-        const abertos = await prisma.$queryRawUnsafe('SELECT * FROM Caixa WHERE empresaId = ? AND usuarioId = ? AND status = ? LIMIT 1', eid, uid, 'ABERTO') as any[];
-        if (abertos.length > 0) return res.status(400).json({ error: 'Caixa já está aberto' });
-        await prisma.$executeRawUnsafe('INSERT INTO Caixa (saldo_inicial, status, empresaId, usuarioId, dta_abertura) VALUES (?, ?, ?, ?, datetime("now"))', saldoInicial || 0, 'ABERTO', eid, uid);
-        const novoCaixa = await prisma.$queryRawUnsafe('SELECT * FROM Caixa WHERE empresaId = ? AND usuarioId = ? AND status = ? ORDER BY id DESC LIMIT 1', eid, uid, 'ABERTO') as any[];
-        res.json({ success: true, caixa: novoCaixa[0] });
+        const aberto = await prisma.caixa.findFirst({
+            where: {
+                empresaId: eid,
+                usuarioId: uid,
+                status: 'ABERTO'
+            }
+        });
+
+        if (aberto) return res.status(400).json({ error: 'Caixa já está aberto' });
+
+        const novoCaixa = await prisma.caixa.create({
+            data: {
+                saldo_inicial: parseFloat(saldoInicial || 0),
+                status: 'ABERTO',
+                empresaId: eid,
+                usuarioId: uid,
+                dta_abertura: new Date()
+            }
+        });
+
+        res.json({ success: true, caixa: novoCaixa });
     } catch (error: any) {
+        console.error('[CAIXA] Erro ao abrir:', error);
         res.status(500).json({ error: 'Erro ao abrir caixa' });
     }
 });

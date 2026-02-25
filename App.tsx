@@ -340,7 +340,7 @@ const App: React.FC = () => {
             <div className="mt-8 mb-4">
               <p className={`text-[10px] font-black text-slate-300 uppercase tracking-widest px-4 ${!isSidebarOpen && 'hidden'}`}>Operacional</p>
             </div>
-            <NavItem id="graphic" icon={<Printer size={20} />} label="Grfica" />
+            <NavItem id="graphic" icon={<Printer size={20} />} label="Grafica" />
             <NavItem id="apparel" icon={<Shirt size={20} />} label="Estamparia" />
             <NavItem id="inventory" icon={<Package size={20} />} label="Estoque" />
             <NavItem id="finance" icon={<DollarSign size={20} />} label="Financeiro" />

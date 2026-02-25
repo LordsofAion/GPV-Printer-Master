@@ -138,6 +138,22 @@ const ApparelModule: React.FC = () => {
   const shrinkHeightAfter = printHeight * (1 - currentFabric.shrinkH / 100);
   const maxShrink = Math.max(currentFabric.shrinkW, currentFabric.shrinkH);
 
+  const handleNewProject = () => {
+    setSelectedColor('#ffffff');
+    setSelectedProduct('Camiseta Algodão 30.1');
+    setSelectedSize('M');
+    setQty(10);
+    setTechnique('DTF');
+    setUploadedArt(null);
+    setFabricType('30.1');
+    setPrintWidth(30);
+    setPrintHeight(40);
+    setInkCoverage(75);
+    setSelectedCustomer(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleCreateOrder = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -315,7 +331,7 @@ const ApparelModule: React.FC = () => {
             <BarChart2 size={16} />
             Relatórios
           </button>
-          <button className="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-indigo-700 transition-all shadow-sm">
+          <button onClick={handleNewProject} className="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-indigo-700 transition-all shadow-sm">
             <Plus size={16} />
             Novo Projeto
           </button>
