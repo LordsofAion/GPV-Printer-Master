@@ -456,6 +456,11 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
+      <footer className="w-full py-6 mt-10 border-t border-slate-100 text-center space-y-1 no-print">
+        <p className="text-xs font-black text-slate-400 uppercase tracking-widest leading-loose">
+          Desenvolvedor: <span className="text-indigo-600">Gilcimar Martins</span> - Suporte: <span className="text-indigo-600 underline">gwebsitesoluções.com.br</span>
+        </p>
+      </footer>
       <img src="/watermark_logo.png" className="system-watermark no-print" alt="" />
     </>
   );
