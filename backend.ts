@@ -201,6 +201,36 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', version: VERSION, time: new Date().toISOString() });
 });
 
+// Public Approval Route (No Auth)
+app.get('/api/public/ordens/:id/aprovar', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const orderId = parseInt(id);
+        const order = await prisma.ordemProducao.findUnique({ where: { id: orderId } });
+
+        if (!order) return res.status(404).send('<h1>Erro</h1><p>Ordem não encontrada.</p>');
+
+        await prisma.ordemProducao.update({
+            where: { id: orderId },
+            data: {
+                status: 'PRODUCTION',
+                //@ts-ignore
+                aprovacaoDigital: 'APROVADO'
+            }
+        });
+
+        res.send(`
+            <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+                <h1 style="color: #10b981;">✅ Ordem Aprovada!</h1>
+                <p>Obrigado! Sua ordem #${id} foi enviada para produção.</p>
+                <p style="color: #64748b; font-size: 14px;">Você já pode fechar esta aba.</p>
+            </div>
+        `);
+    } catch (error) {
+        res.status(500).send('<h1>Erro</h1><p>Falha ao processar aprovação.</p>');
+    }
+});
+
 // Auth Middleware
 const authenticateToken = (req: any, res: any, next: any) => {
     const authHeader = req.headers['authorization'];
@@ -761,7 +791,14 @@ app.get('/api/relatorios/estrategico/encalhado', authenticateToken, async (req: 
                 }
             }
         });
-        res.json(produtosSemVenda);
+
+        const suggestions = produtosSemVenda.map(p => ({
+            ...p,
+            valorSugerido: p.preco * 0.8, // 20% de desconto
+            lucroSugerido: (p.preco * 0.8) - (p.custo || 0)
+        }));
+
+        res.json(suggestions);
     } catch { res.status(500).json({ error: 'Erro ao buscar produtos encalhados' }); }
 });
 

@@ -91,9 +91,9 @@ const StrategicBI: React.FC<{ token: string | null }> = ({ token }) => {
                             <div key={i} className="group relative flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[24px] hover:shadow-md transition-all hover:-translate-y-1">
                                 <div className="flex items-center gap-4">
                                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-xs ${i === 0 ? 'bg-amber-100 text-amber-600 ring-4 ring-amber-50' :
-                                            i === 1 ? 'bg-slate-100 text-slate-600 ring-4 ring-slate-50' :
-                                                i === 2 ? 'bg-orange-100 text-orange-600 ring-4 ring-orange-50' :
-                                                    'bg-slate-50 text-slate-400'
+                                        i === 1 ? 'bg-slate-100 text-slate-600 ring-4 ring-slate-50' :
+                                            i === 2 ? 'bg-orange-100 text-orange-600 ring-4 ring-orange-50' :
+                                                'bg-slate-50 text-slate-400'
                                         }`}>
                                         #{i + 1}
                                     </div>
@@ -101,8 +101,8 @@ const StrategicBI: React.FC<{ token: string | null }> = ({ token }) => {
                                         <p className="text-sm font-black text-slate-900">{p.nome}</p>
                                         <div className="flex items-center gap-2 mt-1">
                                             <span className={`text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest ${p.margemPercentual > 50 ? 'bg-emerald-100 text-emerald-700' :
-                                                    p.margemPercentual > 30 ? 'bg-blue-100 text-blue-700' :
-                                                        'bg-slate-100 text-slate-600'
+                                                p.margemPercentual > 30 ? 'bg-blue-100 text-blue-700' :
+                                                    'bg-slate-100 text-slate-600'
                                                 }`}>
                                                 {p.margemPercentual.toFixed(1)}% Margem
                                             </span>
@@ -123,15 +123,39 @@ const StrategicBI: React.FC<{ token: string | null }> = ({ token }) => {
                     <h3 className="text-lg font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <AlertCircle size={20} className="text-rose-500" /> Produtos Sem Giro (60+ dias)
                     </h3>
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {encalhados.length > 0 ? encalhados.map((p, i) => (
-                            <div key={i} className="flex justify-between items-center p-4 bg-white border border-slate-100 rounded-xl border-l-4 border-l-rose-500">
+                            <div key={i} className="flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[24px] border-l-4 border-l-rose-500 hover:shadow-md transition-all">
                                 <div>
-                                    <p className="text-sm font-bold text-slate-800">{p.nome}</p>
-                                    <p className="text-[10px] text-slate-400 font-black uppercase">Estoque: {p.estoque} un</p>
+                                    <p className="text-sm font-black text-slate-800">{p.nome}</p>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Estoque: {p.estoque} un</span>
+                                        <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                        <span className="text-[10px] text-rose-500 font-black uppercase tracking-widest">Preço: R$ {p.preco.toFixed(2)}</span>
+                                    </div>
                                 </div>
-                                <div className="text-right">
-                                    <button className="text-[10px] font-black text-indigo-600 uppercase hover:underline">Criar Promoção</button>
+                                <div className="text-right space-y-2">
+                                    <div className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-tighter">
+                                        Suj: R$ {p.valorSugerido?.toFixed(2)} (-20%)
+                                    </div>
+                                    <button onClick={async () => {
+                                        if (window.confirm(`Deseja aplicar o desconto de 20% no produto ${p.nome}?`)) {
+                                            try {
+                                                const res = await fetch(`http://localhost:3000/api/produtos/${p.id}`, {
+                                                    method: 'PATCH',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': `Bearer ${token}`
+                                                    },
+                                                    body: JSON.stringify({ preco: p.valorSugerido })
+                                                });
+                                                if (res.ok) {
+                                                    alert('Promoção aplicada com sucesso!');
+                                                    loadData();
+                                                }
+                                            } catch { alert('Erro ao aplicar promoção.'); }
+                                        }
+                                    }} className="text-[10px] font-black text-indigo-600 uppercase hover:underline block w-full">Aplicar Agora</button>
                                 </div>
                             </div>
                         )) : <div className="p-10 text-center text-slate-400 text-sm font-bold italic">Todo o seu estoque está girando bem!</div>}
