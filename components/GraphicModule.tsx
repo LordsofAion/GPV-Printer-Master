@@ -239,13 +239,13 @@ const GraphicModule: React.FC = () => {
       th { text-align: left; font-size: 10px; font-weight: 900; color: #94a3b8; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding: 12px 10px; }
       td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #334155; }
       .total-box { margin-top: 40px; text-align: right; padding: 25px; background: #f8fafc; border-radius: 16px; border: 1px solid #e2e8f0; }
-      .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 80px; font-weight: 900; color: rgba(15, 23, 42, 0.04); z-index: -1; white-space: nowrap; text-transform: uppercase; letter-spacing: 10px; pointer-events: none; }
+      .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); width: 600px; opacity: 0.04; z-index: -1; pointer-events: none; filter: grayscale(100%); }
       .footer { margin-top: 60px; font-size: 10px; color: #94a3b8; border-top: 1px solid #f1f5f9; pt: 20px; }
     </style></head><body>
-      <div class="watermark">${company.nomeEmpresa || 'GPV STUDIO'}</div>
+      <img src="/watermark_logo.png" class="watermark" alt="">
       <div class="header">
         <div class="logo">
-          ${company.logo ? `<img src="${company.logo}" style="max-height:70px">` : `<div class="logo-text">${company.nomeEmpresa || 'GPV STUDIO'}</div>`}
+          <img src="/watermark_logo.png" style="max-height:80px">
         </div>
         <div class="info">
           <div style="font-weight:900; font-size:13px; color:#0f172a; margin-bottom:4px;">${company.nomeEmpresa || 'GPV STUDIO'}</div>

@@ -188,13 +188,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 8rem;
-  font-weight: 900;
-  color: rgba(0, 0, 0, 0.03);
+  opacity: 0.04;
   pointer-events: none;
   z-index: 0;
-  white-space: nowrap;
   user-select: none;
-  text-transform: uppercase;
-  letter-spacing: 0.5rem;
+  width: 600px;
+  height: auto;
+  filter: grayscale(100%);
 }

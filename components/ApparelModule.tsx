@@ -220,14 +220,14 @@ const ApparelModule: React.FC = () => {
       th { text-align: left; font-size: 11px; font-weight: 900; color: #94a3b8; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding: 15px 12px; }
       td { padding: 15px 12px; border-bottom: 1px solid #f8fafc; font-size: 14px; color: #334155; }
       .total-box { margin-top: 40px; text-align: right; padding: 30px; background: #1e1b4b; border-radius: 20px; color: white; box-shadow: 0 10px 15px -3px rgba(30, 27, 75, 0.2); }
-      .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 85px; font-weight: 900; color: rgba(99, 102, 241, 0.05); z-index: -1; white-space: nowrap; text-transform: uppercase; letter-spacing: 12px; pointer-events: none; }
+      .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); width: 600px; opacity: 0.05; z-index: -1; pointer-events: none; filter: grayscale(100%); }
       .footer { margin-top: 60px; font-size: 10px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 25px; }
       .spec-pill { background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #475569; display: inline-block; margin-right: 5px; margin-top: 5px; }
     </style></head><body>
-      <div class="watermark">${company.nomeEmpresa || 'GPV STUDIO'}</div>
+      <img src="/watermark_logo.png" class="watermark" alt="">
       <div class="header">
         <div class="logo">
-          ${company.logo ? `<img src="${company.logo}" style="max-height:80px">` : `<div class="logo-text">${company.nomeEmpresa || 'GPV STUDIO'}</div>`}
+          <img src="/watermark_logo.png" style="max-height:90px">
         </div>
         <div class="info">
           <div style="font-weight:900; font-size:14px; color:#1e1b4b; margin-bottom:4px;">${company.nomeEmpresa || 'GPV STUDIO'}</div>

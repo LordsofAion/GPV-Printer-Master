@@ -456,7 +456,7 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-      <div className="system-watermark no-print">{companyName}</div>
+      <img src="/watermark_logo.png" className="system-watermark no-print" alt="" />
     </>
   );
 };
