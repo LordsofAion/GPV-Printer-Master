@@ -1,0 +1,28 @@
+﻿  ÔÇó electron-builder  version=24.13.3 os=10.0.26200
+  ÔÇó loaded configuration  file=package.json ("build" field)
+  ÔÇó packaging       platform=win32 arch=x64 electron=29.4.6 appOutDir=dist_exe\win-unpacked
+  ÔÇó default Electron icon is used  reason=application icon is not set
+  Ô¿» cannot execute  cause=exit status 1
+                    errorOut=Fatal error: Unable to commit changes
+
+                    command='C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\winCodeSign-2.6.0\rcedit-x64.exe' 'D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\dist_exe\win-unpacked\GPV Print Manager.exe' --set-version-string FileDescription 'GPV Print Manager' --set-version-string ProductName 'GPV Print Manager' --set-version-string LegalCopyright 'Copyright ┬® 2026 GPV Studio' --set-file-version 1.0.0 --set-product-version 1.0.0.0 --set-version-string InternalName 'GPV Print Manager' --set-version-string OriginalFilename '' --set-version-string CompanyName 'GPV Studio'
+                    workingDir=
+  ÔÇó Above command failed, retrying 3 more times
+  Ô¿» cannot execute  cause=exit status 1
+                    errorOut=Fatal error: Unable to commit changes
+
+                    command='C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\winCodeSign-2.6.0\rcedit-x64.exe' 'D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\dist_exe\win-unpacked\GPV Print Manager.exe' --set-version-string FileDescription 'GPV Print Manager' --set-version-string ProductName 'GPV Print Manager' --set-version-string LegalCopyright 'Copyright ┬® 2026 GPV Studio' --set-file-version 1.0.0 --set-product-version 1.0.0.0 --set-version-string InternalName 'GPV Print Manager' --set-version-string OriginalFilename '' --set-version-string CompanyName 'GPV Studio'
+                    workingDir=
+  ÔÇó Above command failed, retrying 2 more times
+  Ô¿» cannot execute  cause=exit status 1
+                    errorOut=Fatal error: Unable to commit changes
+
+                    command='C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\winCodeSign-2.6.0\rcedit-x64.exe' 'D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\dist_exe\win-unpacked\GPV Print Manager.exe' --set-version-string FileDescription 'GPV Print Manager' --set-version-string ProductName 'GPV Print Manager' --set-version-string LegalCopyright 'Copyright ┬® 2026 GPV Studio' --set-file-version 1.0.0 --set-product-version 1.0.0.0 --set-version-string InternalName 'GPV Print Manager' --set-version-string OriginalFilename '' --set-version-string CompanyName 'GPV Studio'
+                    workingDir=
+  ÔÇó Above command failed, retrying 1 more times
+  Ô¿» cannot execute  cause=exit status 1
+                    errorOut=Fatal error: Unable to commit changes
+
+                    command='C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\winCodeSign-2.6.0\rcedit-x64.exe' 'D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\dist_exe\win-unpacked\GPV Print Manager.exe' --set-version-string FileDescription 'GPV Print Manager' --set-version-string ProductName 'GPV Print Manager' --set-version-string LegalCopyright 'Copyright ┬® 2026 GPV Studio' --set-file-version 1.0.0 --set-product-version 1.0.0.0 --set-version-string InternalName 'GPV Print Manager' --set-version-string OriginalFilename '' --set-version-string CompanyName 'GPV Studio'
+                    workingDir=
+  ÔÇó Above command failed, retrying 0 more times

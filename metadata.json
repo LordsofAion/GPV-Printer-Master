@@ -1,0 +1,8 @@
+
+{
+  "name": "GPV Print Manager",
+  "description": "Ecossistema SaaS para Gráfica, Estamparia e Papelaria. Gestão 360º de PDV, Produção e Fiscal.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

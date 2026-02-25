@@ -1,0 +1,8 @@
+
+> gpv-print-manager@1.0.0 build:backend
+> esbuild backend.ts --bundle --platform=node --target=node18 --outfile=dist-backend/server.js --external:electron --external:@prisma/client --external:.prisma/client
+
+
+  dist-backend\server.js  1.8mb
+
+Done in 292ms

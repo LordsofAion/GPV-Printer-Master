@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Licenças GPV Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;900&display=swap');
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-['Inter'] h-screen flex items-center justify-center selection:bg-indigo-500 selection:text-white overflow-hidden">
+
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+
+    <div class="relative w-full max-w-2xl bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-2xl p-10 animate-in fade-in zoom-in duration-500">
+        
+        <header class="mb-10 text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-400 mb-6 ring-1 ring-indigo-500/20 shadow-[0_0_30px_-10px_rgba(99,102,241,0.3)]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <h1 class="text-3xl font-black text-white tracking-tight mb-2">GPV License Manager</h1>
+            <p class="text-slate-400 font-medium">Gerador de chaves criptografadas de alta segurança</p>
+        </header>
+
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Cliente</label>
+                <input type="text" id="clientName" placeholder="Ex: Gráfica Rápida LTDA" 
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-medium placeholder:text-slate-700">
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Validade</label>
+                <select id="validity" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-medium appearance-none">
+                    <option value="30">30 Dias (Mensal)</option>
+                    <option value="90">90 Dias (Trimestral)</option>
+                    <option value="180">6 Meses (Semestral)</option>
+                    <option value="365">1 Ano (Anual)</option>
+                    <option value="3650">10 Anos (Vitalício)</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="generateKey()" 
+            class="group w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_-5px_rgba(79,70,229,0.5)] flex items-center justify-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-12 transition-transform"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            GERAR CHAVE DE ATIVAÇÃO
+        </button>
+
+        <div id="resultArea" class="mt-8 opacity-0 transition-opacity duration-500 pointer-events-none">
+            <div class="flex items-center justify-between mb-2">
+                <label class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Chave Gerada com Sucesso
+                </label>
+                <span id="expiryDisplay" class="text-[10px] font-bold text-slate-500 uppercase"></span>
+            </div>
+            <div class="relative group">
+                <textarea id="outputKey" readonly 
+                    class="w-full h-32 bg-slate-950/50 border border-emerald-500/30 rounded-xl p-4 font-['JetBrains_Mono'] text-xs text-emerald-400 break-all resize-none outline-none focus:ring-2 focus:ring-emerald-500/20"></textarea>
+                <button onclick="copyToClipboard()" class="absolute top-3 right-3 p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 rounded-lg transition-colors" title="Copiar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO SECRETA (Deve bater com o backend)
+        const SECRET = 'GPV_MASTER_LICENSE_KEY_2026_SECURE_HASH_XY99';
+
+        function base64url(source) {
+            let encodedSource = CryptoJS.enc.Base64.stringify(source);
+            encodedSource = encodedSource.replace(/=+$/, '');
+            encodedSource = encodedSource.replace(/\+/g, '-');
+            encodedSource = encodedSource.replace(/\//g, '_');
+            return encodedSource;
+        }
+
+        function generateKey() {
+            const client = document.getElementById('clientName').value.trim();
+            const days = parseInt(document.getElementById('validity').value);
+
+            if (!client) {
+                alert('Por favor, informe o nome do cliente.');
+                return;
+            }
+
+            const header = {
+                "alg": "HS256",
+                "typ": "JWT"
+            };
+
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+
+            const payload = {
+                "client": client,
+                "expiry": expiryDate.toISOString(),
+                "iat": Math.floor(Date.now() / 1000)
+            };
+
+            const stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+            const encodedHeader = base64url(stringifiedHeader);
+
+            const stringifiedPayload = CryptoJS.enc.Utf8.parse(JSON.stringify(payload));
+            const encodedPayload = base64url(stringifiedPayload);
+
+            const signature = encodedHeader + "." + encodedPayload;
+            const signed = CryptoJS.HmacSHA256(signature, SECRET);
+            const encodedSignature = base64url(signed);
+
+            const token = `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
+
+            // Exibir Resultado
+            const resultArea = document.getElementById('resultArea');
+            const outputKey = document.getElementById('outputKey');
+            const expiryDisplay = document.getElementById('expiryDisplay');
+
+            outputKey.value = token;
+            expiryDisplay.innerText = `Válido até: ${expiryDate.toLocaleDateString()}`;
+            
+            resultArea.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function copyToClipboard() {
+            const copyText = document.getElementById("outputKey");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(copyText.value);
+            alert("Chave copiada para a área de transferência!");
+        }
+    </script>
+</body>
+</html>

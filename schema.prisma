@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  senha     String
+  nome      String
+  role      String   @default("USER") // ADMIN, CAIXA, PRODUCAO
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  empresaId Int?     @default(1) // Single tenant default
+
+  vendas    Venda[]
+  caixas    Caixa[]
+}
+
+model Cliente {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String?
+  telefone  String?
+  cpf_cnpj  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendas    Venda[]
+  ordens    OrdemProducao[] // Relation to Production Orders
+}
+
+model Produto {
+  id              Int      @id @default(autoincrement())
+  nome            String
+  preco           Float
+  custo           Float    @default(0)
+  estoque         Int      @default(0) // Inventory count
+  estoque_minimo  Int      @default(10) // Alert threshold
+  sku             String?  @unique
+  categoria       String?
+  modeloNegocio   String?  // VAREJO, PRODUCAO, ACESSORIOS, PAPELARIA
+  tempoProducao   Int?     // In minutes
+  desperdicioMedio Float?  @default(0) // Percentage
+  empresaId       Int?     @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  itensVenda ItemVenda[]
+}
+
+model Venda {
+  id              Int      @id @default(autoincrement())
+  data            DateTime @default(now())
+  valor_total     Float
+  forma_pagamento String
+  isFiscal        Boolean  @default(false)
+  status          String   @default("COMPLETED") // COMPLETED, CANCELED
+
+  clienteId       Int?
+  cliente         Cliente? @relation(fields: [clienteId], references: [id])
+
+  usuarioId       Int?
+  usuario         Usuario? @relation(fields: [usuarioId], references: [id])
+  empresaId       Int?     @default(1)
+
+  itens           ItemVenda[]
+  transacoes      Transacao[]
+}
+
+model ItemVenda {
+  id         Int     @id @default(autoincrement())
+  vendaId    Int
+  venda      Venda   @relation(fields: [vendaId], references: [id])
+  produtoId  Int
+  produto    Produto @relation(fields: [produtoId], references: [id])
+  quantidade Int
+  preco_unit Float
+}
+
+model OrdemProducao {
+  id             Int      @id @default(autoincrement())
+  tipo           String   // GRAPHIC, APPAREL
+  status         String   // AWAITING, PRODUCTION, FINISHED, DELIVERED
+  data_criacao   DateTime @default(now())
+  data_entrega   DateTime?
+  valor          Float
+  especificacoes String   // JSON
+  
+  // Strategic Fields
+  aprovacaoDigital String   @default("PENDENTE") // PENDENTE, APROVADO, NEGADO
+  isRetrabalho     Boolean  @default(false)
+  motivoRetrabalho String?
+  custoRetrabalho  Float?   @default(0)
+  respRetrabalho   String?
+  
+  empresaId      Int?     @default(1)
+
+  clienteId      Int?
+  cliente         Cliente? @relation(fields: [clienteId], references: [id])
+}
+
+model Caixa {
+  id            Int      @id @default(autoincrement())
+  dta_abertura  DateTime @default(now())
+  dta_fechamento DateTime?
+  saldo_inicial Float
+  saldo_final   Float?
+  status        String   // ABERTO, FECHADO
+  empresaId     Int?     @default(1)
+
+  usuarioId     Int
+  usuario       Usuario  @relation(fields: [usuarioId], references: [id])
+
+  movimentacoes Transacao[]
+}
+
+model Transacao {
+  id          Int      @id @default(autoincrement())
+  tipo        String   // RECEITA, DESPESA
+  valor       Float
+  descricao   String
+  metodo      String?  // DINHEIRO, PIX, CARTAO, etc.
+  categoria   String?  // For P&L classification
+  modeloNegocio String? // VAREJO, PRODUCAO, etc.
+  data        DateTime @default(now())
+  empresaId   Int?     @default(1)
+
+  vendaId     Int?
+  venda       Venda?   @relation(fields: [vendaId], references: [id])
+
+  caixaId     Int?
+  caixa       Caixa?   @relation(fields: [caixaId], references: [id])
+}
+
+model MetaMensal {
+  id            Int      @id @default(autoincrement())
+  mes           Int      // 1-12
+  ano           Int
+  categoria     String   // VAREJO, PRODUCAO, ACESSORIOS, PAPELARIA
+  valorMeta     Float
+  empresaId     Int?     @default(1)
+  updatedAt     DateTime @updatedAt
+}
+
+model SystemConfig {
+  id              Int      @id @default(autoincrement())
+  licenseKey      String?
+  licenseExpiry   DateTime?
+  clientName      String?
+  updatedAt       DateTime @updatedAt
+}

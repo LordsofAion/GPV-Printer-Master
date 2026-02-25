@@ -1,0 +1,24 @@
+
+> gpv-print-manager@1.0.0 build
+> vite build
+
+X [ERROR] "@vitejs/plugin-react" resolved to an ESM file. ESM file cannot be loaded by `require`. See https://vite.dev/guide/troubleshooting.html#this-package-is-esm-only for more details. [plugin externalize-deps]
+
+    vite.config.ts:3:18:
+      3 │ import react from '@vitejs/plugin-react';
+        ╵                   ~~~~~~~~~~~~~~~~~~~~~~
+
+[31mfailed to load config from F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\vite.config.ts[39m
+[31merror during build:
+Error: Build failed with 1 error:
+vite.config.ts:3:18: ERROR: [plugin: externalize-deps] "@vitejs/plugin-react" resolved to an ESM file. ESM file cannot be loaded by `require`. See https://vite.dev/guide/troubleshooting.html#this-package-is-esm-only for more details.
+    at failureErrorWithLog (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:1472:15)
+    at F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:945:25
+    at runOnEndCallbacks (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:1315:45)
+    at buildResponseToResult (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:943:7)
+    at F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:970:16
+    at responseCallbacks.<computed> (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:622:9)
+    at handleIncomingPacket (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:677:12)
+    at Socket.readFromStdout (F:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\vite\node_modules\esbuild\lib\main.js:600:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)[39m

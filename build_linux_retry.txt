@@ -1,0 +1,8 @@
+
+> gpv-print-manager@1.0.0 generate:linux
+> electron-builder --linux
+
+  • electron-builder  version=24.13.3 os=10.0.26100
+  • loaded configuration  file=package.json ("build" field)
+  • packaging       platform=linux arch=x64 electron=29.4.6 appOutDir=dist_exe\linux-unpacked
+  • building        target=tar.gz arch=x64 file=dist_exe\gpv-print-manager-1.0.0.tar.gz

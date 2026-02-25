@@ -1,0 +1,132 @@
+﻿  ÔÇó electron-builder  version=24.13.3 os=10.0.26200
+  ÔÇó loaded configuration  file=package.json ("build" field)
+  ÔÇó packaging       platform=win32 arch=x64 electron=29.4.6 appOutDir=dist_exe\win-unpacked
+  ÔÇó default Electron icon is used  reason=application icon is not set
+  ÔÇó downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+  ÔÇó downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=1.231s
+  Ô¿» cannot execute  cause=exit status 2
+                    out=
+    7-Zip (a) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+    
+    Scanning the drive for archives:
+    1 file, 5635384 bytes (5504 KiB)
+    
+    Extracting archive: C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159.7z
+    --
+    Path = C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159.7z
+    Type = 7z
+    Physical Size = 5635384
+    Headers Size = 1492
+    Method = LZMA2:24m LZMA:20 BCJ2
+    Solid = +
+    Blocks = 2
+    
+    
+    Sub items Errors: 2
+    
+    Archives with Errors: 1
+    
+    Sub items Errors: 2
+    
+                    errorOut=ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159\darwin\10.12\lib\libcrypto.dylib
+    ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159\darwin\10.12\lib\libssl.dylib
+    
+                    command='D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\7zip-bin\win\x64\7za.exe' x -bd 'C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159.7z' '-oC:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\961713159'
+                    workingDir=C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign
+  ÔÇó Above command failed, retrying 3 more times
+  ÔÇó downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+  ÔÇó downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=1.002s
+  Ô¿» cannot execute  cause=exit status 2
+                    out=
+    7-Zip (a) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+    
+    Scanning the drive for archives:
+    1 file, 5635384 bytes (5504 KiB)
+    
+    Extracting archive: C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799.7z
+    --
+    Path = C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799.7z
+    Type = 7z
+    Physical Size = 5635384
+    Headers Size = 1492
+    Method = LZMA2:24m LZMA:20 BCJ2
+    Solid = +
+    Blocks = 2
+    
+    
+    Sub items Errors: 2
+    
+    Archives with Errors: 1
+    
+    Sub items Errors: 2
+    
+                    errorOut=ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799\darwin\10.12\lib\libcrypto.dylib
+    ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799\darwin\10.12\lib\libssl.dylib
+    
+                    command='D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\7zip-bin\win\x64\7za.exe' x -bd 'C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799.7z' '-oC:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\228179799'
+                    workingDir=C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign
+  ÔÇó Above command failed, retrying 2 more times
+  ÔÇó downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+  ÔÇó downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=2.218s
+  Ô¿» cannot execute  cause=exit status 2
+                    out=
+    7-Zip (a) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+    
+    Scanning the drive for archives:
+    1 file, 5635384 bytes (5504 KiB)
+    
+    Extracting archive: C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587.7z
+    --
+    Path = C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587.7z
+    Type = 7z
+    Physical Size = 5635384
+    Headers Size = 1492
+    Method = LZMA2:24m LZMA:20 BCJ2
+    Solid = +
+    Blocks = 2
+    
+    
+    Sub items Errors: 2
+    
+    Archives with Errors: 1
+    
+    Sub items Errors: 2
+    
+                    errorOut=ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587\darwin\10.12\lib\libcrypto.dylib
+    ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587\darwin\10.12\lib\libssl.dylib
+    
+                    command='D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\7zip-bin\win\x64\7za.exe' x -bd 'C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587.7z' '-oC:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\678602587'
+                    workingDir=C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign
+  ÔÇó Above command failed, retrying 1 more times
+  ÔÇó downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+  ÔÇó downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=1.579s
+  Ô¿» cannot execute  cause=exit status 2
+                    out=
+    7-Zip (a) 21.07 (x64) : Copyright (c) 1999-2021 Igor Pavlov : 2021-12-26
+    
+    Scanning the drive for archives:
+    1 file, 5635384 bytes (5504 KiB)
+    
+    Extracting archive: C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563.7z
+    --
+    Path = C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563.7z
+    Type = 7z
+    Physical Size = 5635384
+    Headers Size = 1492
+    Method = LZMA2:24m LZMA:20 BCJ2
+    Solid = +
+    Blocks = 2
+    
+    
+    Sub items Errors: 2
+    
+    Archives with Errors: 1
+    
+    Sub items Errors: 2
+    
+                    errorOut=ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563\darwin\10.12\lib\libcrypto.dylib
+    ERROR: Cannot create symbolic link : O cliente não tem o privilégio necessário. : C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563\darwin\10.12\lib\libssl.dylib
+    
+                    command='D:\TRABALHO PARA ESSE ANO 2026\gpv-print-manager\node_modules\7zip-bin\win\x64\7za.exe' x -bd 'C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563.7z' '-oC:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign\922660563'
+                    workingDir=C:\Users\Gilcimar\AppData\Local\electron-builder\Cache\winCodeSign
+  ÔÇó Above command failed, retrying 0 more times
