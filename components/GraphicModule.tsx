@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Plus, Search, Filter, FileText, Upload, Calendar, CheckCircle2, Clock, Paintbrush,
   Printer as PrinterIcon, ChevronRight, MoreVertical, X, Activity, Package, Pencil,
-  Trash2, AlertTriangle, Save, Phone
+  Trash2, AlertTriangle, Save, Phone, ArrowRight
 } from 'lucide-react';
 import { OrderStatus } from '../types';
 import CustomerSelector from './CustomerSelector';
