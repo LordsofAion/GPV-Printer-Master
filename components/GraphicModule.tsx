@@ -22,6 +22,33 @@ const GraphicModule: React.FC = () => {
   const [finishes, setFinishes] = useState<string[]>([]);
   const [instructions, setInstructions] = useState('');
   const [price, setPrice] = useState(250.00);
+  const [width, setWidth] = useState(100); // cm
+  const [height, setHeight] = useState(100); // cm
+  const [quantity, setQuantity] = useState(1);
+
+  const SUBS_CONFIG: Record<string, { unit: 'm2' | 'unit', cost: number }> = {
+    'Couché 150g Brilho': { unit: 'unit', cost: 0.15 },
+    'Supremo 300g (Cartão)': { unit: 'unit', cost: 0.45 },
+    'Adesivo Vinil': { unit: 'm2', cost: 35.00 },
+    'Lona 440g Fosca': { unit: 'm2', cost: 28.00 }
+  };
+
+  const calculateGraphicCost = () => {
+    const config = SUBS_CONFIG[substrate] || { unit: 'unit', cost: 0 };
+    let cost = 0;
+    if (config.unit === 'm2') {
+      const areaM2 = (width * height) / 10000;
+      cost = areaM2 * config.cost * quantity;
+    } else {
+      cost = quantity * config.cost;
+    }
+    // Adicionar custo de acabamentos (simples)
+    cost += finishes.length * 2.00 * quantity;
+    return cost;
+  };
+
+  const productionCost = calculateGraphicCost();
+  const suggestedPrice = productionCost * 2.5; // Margem de 150%
 
   // Rework & Approval States
   const [isRetrabalho, setIsRetrabalho] = useState(false);
@@ -100,7 +127,8 @@ const GraphicModule: React.FC = () => {
           substrato: substrate,
           cores: colors,
           acabamentos: finishes,
-          instrucoes: instructions
+          instrucoes: instructions,
+          custo_producao: productionCost
         },
         valor: price,
         clienteId: selectedCustomer?.id || null,
@@ -463,6 +491,25 @@ const GraphicModule: React.FC = () => {
                   </div>
                 </div>
 
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Qtd</label>
+                    <input type="number" value={quantity} onChange={e => setQuantity(Number(e.target.value))} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold outline-none" />
+                  </div>
+                  {SUBS_CONFIG[substrate]?.unit === 'm2' && (
+                    <>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Largura (cm)</label>
+                        <input type="number" value={width} onChange={e => setWidth(Number(e.target.value))} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold outline-none" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Altura (cm)</label>
+                        <input type="number" value={height} onChange={e => setHeight(Number(e.target.value))} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold outline-none" />
+                      </div>
+                    </>
+                  )}
+                </div>
+
                 <div className="space-y-3">
                   <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Acabamentos</label>
                   <div className="flex flex-wrap gap-2">
@@ -475,6 +522,17 @@ const GraphicModule: React.FC = () => {
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Instruções</label>
                   <textarea rows={2} value={instructions} onChange={e => setInstructions(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none text-sm" placeholder="Observações de produção..." />
+                </div>
+
+                <div className="p-6 bg-indigo-50 rounded-3xl border border-indigo-100 flex justify-between items-center">
+                  <div>
+                    <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Custo de Produção</p>
+                    <p className="text-xl font-black text-indigo-900">R$ {productionCost.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Preço Sugerido (150%)</p>
+                    <p className="text-xl font-black text-indigo-900 line-through opacity-50">R$ {suggestedPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                  </div>
                 </div>
 
                 <div className="p-6 bg-rose-50 rounded-2xl border border-rose-100 space-y-4">
@@ -510,7 +568,7 @@ const GraphicModule: React.FC = () => {
               <div className="space-y-8">
                 <div className="bg-slate-900 p-8 rounded-[32px] text-white shadow-xl">
                   <div className="flex justify-between items-center text-2xl mb-8">
-                    <span className="text-xs font-black uppercase text-slate-500">Valor Total</span>
+                    <span className="text-xs font-black uppercase text-slate-500">Valor Final</span>
                     <div className="flex items-center gap-2">
                       <span className="text-slate-500 font-bold font-mono">R$</span>
                       <input type="number" value={price} onChange={e => setPrice(Number(e.target.value))} className="w-32 bg-transparent text-right outline-none font-black text-indigo-400 text-4xl" />
