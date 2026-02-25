@@ -701,17 +701,47 @@ app.get('/api/relatorios/estrategico/abc-lucro', authenticateToken, async (req: 
         });
 
         const margemPorProduto: any = {};
+        const TAXA_HORA_PRODUCAO = 30.00; // R$ 30,00/hora = R$ 0,50/min
+
         itens.forEach(i => {
             if (!i.produto) return;
             if (!margemPorProduto[i.produto.id]) {
-                margemPorProduto[i.produto.id] = { nome: i.produto.nome, lucroTotal: 0, margemMedia: 0 };
+                margemPorProduto[i.produto.id] = {
+                    nome: i.produto.nome,
+                    lucroTotal: 0,
+                    receitaTotal: 0,
+                    custoBaseTotal: 0,
+                    custoTempoTotal: 0,
+                    custoDesperdicioTotal: 0
+                };
             }
-            const custoReal = (i.produto.custo || 0) * (1 + (i.produto.desperdicioMedio || 0) / 100);
-            const lucro = (i.preco_unit - custoReal) * i.quantidade;
+
+            // 1. Custo Base (Material)
+            const custoBase = (i.produto.custo || 0) * i.quantidade;
+
+            // 2. Custo de Desperdício (sobre o material)
+            const percentualDesperdicio = (i.produto.desperdicioMedio || 0) / 100;
+            const custoDesperdicio = custoBase * percentualDesperdicio;
+
+            // 3. Custo de Tempo de Produção
+            // tempoProducao está em minutos
+            const tempoMinutos = (i.produto.tempoProducao || 0) * i.quantidade;
+            const custoTempo = (tempoMinutos / 60) * TAXA_HORA_PRODUCAO;
+
+            const lucro = (i.preco_unit * i.quantidade) - (custoBase + custoDesperdicio + custoTempo);
+
+            margemPorProduto[i.produto.id].receitaTotal += (i.preco_unit * i.quantidade);
             margemPorProduto[i.produto.id].lucroTotal += lucro;
+            margemPorProduto[i.produto.id].custoBaseTotal += custoBase;
+            margemPorProduto[i.produto.id].custoTempoTotal += custoTempo;
+            margemPorProduto[i.produto.id].custoDesperdicioTotal += custoDesperdicio;
         });
 
-        const ranking = Object.values(margemPorProduto).sort((a: any, b: any) => b.lucroTotal - a.lucroTotal);
+        const ranking = Object.values(margemPorProduto).map((p: any) => ({
+            ...p,
+            margemPercentual: p.receitaTotal > 0 ? (p.lucroTotal / p.receitaTotal) * 100 : 0
+        })).sort((a: any, b: any) => b.lucroTotal - a.lucroTotal);
+
         res.json(ranking.slice(0, 10));
     } catch { res.status(500).json({ error: 'Erro ao gerar ranking de lucro' }); }
 });
